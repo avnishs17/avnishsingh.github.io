@@ -9,32 +9,67 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Typing effect for the hero section
-const text = "Software Developer | Problem Solver";
+const text = "Data Science Professional | ML Engineer | Researcher";
 const typingText = document.querySelector('.typing-text');
 let i = 0;
+let isDeleting = false;
+let currentText = '';
+let typeSpeed = 100;
 
 function typeWriter() {
-    if (i < text.length) {
-        typingText.textContent = text.substring(0, i + 1);
+    const fullText = text;
+    
+    if (!isDeleting && i <= fullText.length) {
+        currentText = fullText.substring(0, i);
+        typingText.textContent = currentText;
         i++;
-        setTimeout(typeWriter, 100);
     }
+
+    if (i > fullText.length) {
+        // Wait before starting to delete
+        setTimeout(() => {
+            isDeleting = true;
+            typeWriter();
+        }, 2000);
+        return;
+    }
+
+    if (isDeleting && i >= 0) {
+        currentText = fullText.substring(0, i);
+        typingText.textContent = currentText;
+        i--;
+    }
+
+    if (i < 0) {
+        isDeleting = false;
+        i = 0;
+        // Wait before starting to type again
+        setTimeout(typeWriter, 1000);
+        return;
+    }
+
+    setTimeout(typeWriter, isDeleting ? typeSpeed/2 : typeSpeed);
 }
 
 // Start typing effect when page loads
 window.onload = () => {
     typeWriter();
+    // Add fade-in animation to sections
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.add('fade-in');
+    });
 };
 
 // Add active class to navigation links on scroll
 window.addEventListener('scroll', () => {
     let current = '';
     const sections = document.querySelectorAll('section');
+    const navHeight = document.querySelector('nav').offsetHeight;
     
     sections.forEach(section => {
-        const sectionTop = section.offsetTop;
+        const sectionTop = section.offsetTop - navHeight - 100;
         const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - sectionHeight / 3)) {
+        if (scrollY >= sectionTop) {
             current = section.getAttribute('id');
         }
     });
@@ -61,4 +96,15 @@ const revealOnScroll = () => {
     });
 };
 
-window.addEventListener('scroll', revealOnScroll); 
+window.addEventListener('scroll', revealOnScroll);
+
+// Add hover effect to project and publication cards
+document.querySelectorAll('.project-card, .publication-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-10px)';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0)';
+    });
+}); 
