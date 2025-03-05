@@ -60,7 +60,7 @@ window.onload = () => {
     });
 };
 
-// Add active class to navigation links on scroll
+// Simple navigation highlight
 window.addEventListener('scroll', () => {
     let current = '';
     const sections = document.querySelectorAll('section');
@@ -68,7 +68,6 @@ window.addEventListener('scroll', () => {
     
     sections.forEach(section => {
         const sectionTop = section.offsetTop - navHeight - 100;
-        const sectionHeight = section.clientHeight;
         if (scrollY >= sectionTop) {
             current = section.getAttribute('id');
         }
@@ -107,4 +106,47 @@ document.querySelectorAll('.project-card, .publication-card').forEach(card => {
     card.addEventListener('mouseleave', () => {
         card.style.transform = 'translateY(0)';
     });
+});
+
+// Add to existing scroll reveal code
+const animateOnScroll = () => {
+    const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+    
+    elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+            element.classList.add('active');
+        }
+    });
+};
+
+window.addEventListener('scroll', animateOnScroll);
+
+// Add scroll-based animations
+const observerOptions = {
+    threshold: 0.25
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.fade-up').forEach(element => {
+    observer.observe(element);
+});
+
+// Update navigation on scroll
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 100) {
+        nav.classList.add('nav-scrolled');
+    } else {
+        nav.classList.remove('nav-scrolled');
+    }
 }); 

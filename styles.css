@@ -4,16 +4,28 @@
     --accent-color: #00b894;
     --text-color: #2d3436;
     --background-color: #ffffff;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #2d3436;
+    --text-secondary: #636e72;
+    --accent-primary: #0984e3;
+    --accent-secondary: #0984e3;
     --section-padding: 80px 0;
     --card-background: #ffffff;
     --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --accent: #3498db;
+    --bg-white: #ffffff;
+    --bg-light: #f8f9fa;
+    --border-color: #e1e8ed;
+    --tag-bg: #f1f5f9;
+    --tag-text: #3498db;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 html {
@@ -22,18 +34,20 @@ html {
 
 body {
     line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--background-color);
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 /* Navigation */
 nav {
     position: fixed;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: var(--bg-white);
     padding: 20px 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .nav-content {
@@ -48,7 +62,7 @@ nav {
 .logo a {
     font-size: 24px;
     font-weight: bold;
-    color: var(--primary-color);
+    color: var(--text-primary);
     text-decoration: none;
 }
 
@@ -63,16 +77,16 @@ nav {
 
 .nav-links a {
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--text-primary);
     font-weight: 500;
     transition: color 0.3s;
 }
 
 .nav-links a:hover {
-    color: var(--secondary-color);
+    color: var(--accent);
 }
 
-/* Hero Section */
+/* Hero Section with modern gradient */
 .hero {
     height: 100vh;
     display: flex;
@@ -80,40 +94,94 @@ nav {
     justify-content: center;
     text-align: center;
     padding: 0 20px;
-    background: linear-gradient(135deg, #f6f6f6 0%, #ffffff 100%);
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        rgba(9, 132, 227, 0.1) 0%,
+        rgba(0, 184, 148, 0.1) 100%
+    );
+    animation: rotate 20s linear infinite;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 .hero-content h1 {
     font-size: 48px;
     margin-bottom: 20px;
-    color: var(--primary-color);
+    color: var(--text-primary);
 }
 
 .typing-text {
     font-size: 24px;
-    color: var(--secondary-color);
+    color: var(--accent-primary);
     margin-bottom: 30px;
+    letter-spacing: 1px;
 }
 
 .social-links {
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
 }
 
 .social-links a {
     font-size: 24px;
-    color: var(--primary-color);
+    color: var(--text-secondary);
     margin: 0 15px;
     transition: color 0.3s;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .social-links a:hover {
-    color: var(--secondary-color);
+    color: var(--accent-primary);
+    transform: translateY(-5px);
+    background: rgba(100, 255, 218, 0.2);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+}
+
+/* Add floating animation */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* About Section */
 .about {
     padding: var(--section-padding);
-    background-color: #f8f9fa;
+    background-color: var(--bg-secondary);
 }
 
 .about-content {
@@ -129,27 +197,29 @@ nav {
     text-align: center;
     margin-bottom: 40px;
     font-size: 36px;
-    color: var(--primary-color);
+    color: var(--text-primary);
 }
 
 .about-text p {
     margin-bottom: 30px;
     font-size: 18px;
     line-height: 1.8;
+    color: var(--text-secondary);
 }
 
 .download-btn {
     display: inline-block;
-    padding: 12px 30px;
-    background-color: var(--secondary-color);
-    color: white;
+    padding: 10px 20px;
+    background: var(--accent);
+    color: white !important;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
 }
 
 .download-btn:hover {
-    background-color: #0873c4;
+    opacity: 0.9;
 }
 
 .skills h3 {
@@ -165,10 +235,12 @@ nav {
 
 .skill-tags span {
     padding: 8px 16px;
-    background-color: var(--secondary-color);
-    color: white;
+    background-color: #f0f7ff;
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
     border-radius: 20px;
     font-size: 14px;
+    font-weight: 500;
 }
 
 /* Experience Section */
@@ -241,11 +313,12 @@ nav {
 }
 
 .project-card {
-    background: var(--card-background);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: var(--card-shadow);
-    transition: transform 0.3s;
+    background: var(--bg-white);
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
 }
 
 .project-card:hover {
@@ -253,11 +326,12 @@ nav {
 }
 
 .project-card h3 {
-    color: var(--primary-color);
+    color: var(--text-primary);
     margin-bottom: 15px;
 }
 
 .project-card p {
+    color: var(--text-secondary);
     margin-bottom: 20px;
 }
 
@@ -269,15 +343,22 @@ nav {
 }
 
 .project-tags span {
-    padding: 4px 12px;
-    background-color: var(--accent-color);
+    padding: 6px 12px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.project-tags span:hover {
+    background: var(--accent);
     color: white;
-    border-radius: 15px;
-    font-size: 12px;
 }
 
 .project-links a {
-    color: var(--secondary-color);
+    color: var(--accent);
     text-decoration: none;
     font-weight: 500;
 }
@@ -302,24 +383,32 @@ nav {
 }
 
 .education-card {
-    background: var(--card-background);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: var(--card-shadow);
+    background: var(--bg-white);
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
+}
+
+.education-card:hover {
+    transform: translateY(-5px);
 }
 
 .education-card h3 {
-    color: var(--primary-color);
+    color: var(--text-primary);
     margin-bottom: 10px;
 }
 
 .institution {
-    font-weight: 500;
-    color: var(--secondary-color);
+    color: var(--accent-primary);
+    font-weight: 600;
     margin-bottom: 5px;
 }
 
 .degree {
+    color: var(--text-primary);
+    font-weight: 500;
     margin-bottom: 5px;
 }
 
@@ -359,6 +448,7 @@ nav {
     border-radius: 10px;
     box-shadow: var(--card-shadow);
     transition: transform 0.3s ease;
+    border: 1px solid #e2e8f0;
 }
 
 .certification-item:hover {
@@ -376,14 +466,15 @@ nav {
 }
 
 .cert-content h4 {
-    color: var(--primary-color);
+    color: var(--text-primary);
     font-size: 16px;
     margin-bottom: 5px;
     line-height: 1.4;
+    font-weight: 600;
 }
 
 .cert-issuer {
-    color: var(--secondary-color);
+    color: var(--accent-primary);
     font-size: 14px;
     margin-bottom: 10px;
 }
@@ -396,32 +487,41 @@ nav {
 }
 
 .cert-skills span {
-    background-color: var(--accent-color);
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.cert-skills span:hover {
+    background: var(--accent);
     color: white;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    opacity: 0.9;
 }
 
 /* Contact Section */
-  /* Contact Section */
-  .contact {
+.contact {
     padding: var(--section-padding);
+    background-color: var(--bg-primary);
 }
- 
+
 .contact h2 {
-     text-align: center;
-     margin-bottom: 40px;
-     font-size: 36px;
-     color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 36px;
+    color: var(--primary-color);
 }
 
 .contact-content {
     max-width: 600px;
     margin: 0 auto;
     text-align: center;
-    padding: 0 20px;
+    padding: 40px;
+    background-color: var(--bg-primary);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .contact-info {
@@ -433,7 +533,8 @@ nav {
 
 .contact-info a {
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--text-secondary);
+    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -441,7 +542,7 @@ nav {
 }
 
 .contact-info a:hover {
-    color: var(--secondary-color);
+    color: var(--accent-primary);
 }
 
 .location {
@@ -450,15 +551,15 @@ nav {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: var(--text-color);
+    color: var(--text-secondary);
 }
 
 /* Footer */
 footer {
     text-align: center;
     padding: 20px;
-    background-color: var(--primary-color);
-    color: white;
+    background: var(--bg-light);
+    color: var(--text-secondary);
 }
 
 /* Responsive Design */
@@ -481,16 +582,19 @@ footer {
     }
     
     .typing-text {
-        font-size: 20px;
+        font-size: 18px;
     }
     
     .project-grid,
     .education-grid {
         grid-template-columns: 1fr;
     }
+    
+    .project-card, .publication-card, .education-card {
+        padding: 20px;
+    }
 } 
 
-  
 /* Publications Section */
 .publications {
     padding: var(--section-padding);
@@ -504,12 +608,12 @@ footer {
 }
 
 .publication-card {
-    background: var(--card-background);
-    padding: 35px;
-    border-radius: 10px;
-    box-shadow: var(--card-shadow);
-    margin-bottom: 30px;
-    transition: transform 0.3s ease;
+    background: var(--bg-white);
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
 }
 
 .publication-card:hover {
@@ -517,22 +621,22 @@ footer {
 }
 
 .publication-card h3 {
-    color: var(--primary-color);
-    font-size: 22px;
+    color: var(--text-primary);
+    font-size: 20px;
     margin-bottom: 12px;
     line-height: 1.4;
 }
 
 .journal {
-    color: var(--secondary-color);
+    color: var(--accent-primary);
     font-weight: 500;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     font-size: 16px;
 }
 
 .publication-abstract {
-    color: var(--text-color);
-    margin-bottom: 20px;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
     line-height: 1.6;
 }
 
@@ -544,12 +648,18 @@ footer {
 }
 
 .publication-tags span {
-    background-color: var(--accent-color);
+    padding: 6px 12px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.publication-tags span:hover {
+    background: var(--accent);
     color: white;
-    padding: 6px 14px;
-    border-radius: 15px;
-    font-size: 13px;
-    opacity: 0.9;
 }
 
 .publication-links {
@@ -560,7 +670,7 @@ footer {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: var(--secondary-color);
+    color: var(--accent);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s;
@@ -574,4 +684,100 @@ footer {
     font-size: 14px;
 }
 
-/* Projects Section */
+/* Section styling */
+section {
+    padding: 60px 0;
+    background: var(--bg-white);
+}
+
+section:nth-child(even) {
+    background: var(--bg-light);
+}
+
+.section-title {
+    font-size: 42px;
+    color: #ccd6f6;
+    margin-bottom: 60px;
+    text-align: center;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: #64ffda;
+}
+
+/* Card styling */
+.project-card, .publication-card, .education-card {
+    background: var(--bg-white);
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
+}
+
+.project-card:hover, .publication-card:hover, .education-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-title {
+    color: #e6f1ff;
+    font-size: 24px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+/* Tag styling */
+.skill-tags span, .project-tags span, .publication-tags span {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.skill-tags span:hover, .project-tags span:hover, .publication-tags span:hover {
+    background: var(--accent);
+    color: white;
+}
+
+/* Add animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease forwards;
+}
+
+/* Section backgrounds - Alternating for better separation */
+section:nth-child(even) {
+    background-color: var(--bg-light);
+}
+
+section:nth-child(odd) {
+    background-color: var(--bg-white);
+}
+
+/* Update headings */
+h2 {
+    color: var(--text-primary);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+h3 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
